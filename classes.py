@@ -15,15 +15,6 @@ class State:
         self.d_value = d_v
         self.ter = checkTer(self)
 
-    def add_dvalue(self, v):
-        self.d_value += v
-        self.ter = checkTer(self)
-
-    def add_pvalue(self, v):
-        self.p_value += v
-        self.ter = checkTer(self)
-
-
 def checkTer(s):
     if s.p_value > 21 or s.p_value < 1 or s.d_value >= 17 or s.d_value < 1:
         return True

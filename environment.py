@@ -4,7 +4,7 @@ from classes import Action, State, Card
 class Environment:
 
     def __init__(self):
-        self.stateSet = [ State(x-9,y-9,z) for x in range(41) for y in range(41) for z in range(41)]
+        self.stateSet = [State(x-9,y-9,x*41+y) for x in range(41) for y in range(41)]
 
     def getInitState(self):
         return self.getState(random.randint(1,10), random.randint(1,10))
@@ -19,7 +19,7 @@ class Environment:
             nextState = self.getState(s.p_value, s.d_value)
             while not nextState.ter:
                 nextCard = self.drawCard()
-                nextState.add_dvalue(nextCard.value)
+                nextState = self.getState(s.p_value, s.d_value + nextCard.value)
             return nextState, self.reward(nextState, True)
 
     # if dealer takes turn, ter = True, else ter = False, different from State.ter
@@ -28,7 +28,7 @@ class Environment:
         #  bust
         if s.p_value > 21 or s.p_value < 1:
             return -1
-        elif s.d_value > 21 or s.d_value < 1:
+        elif s.p_value > 21 or s.d_value < 1:
             return 1
         #  end of the game
         if ter:
@@ -51,23 +51,4 @@ class Environment:
     def getState(self, p, d):
         return self.stateSet[(p+9)*41+(d+9)]
 
-#  # test
-#  e = Environment()
-#  someState = State(7, 6)
-#  print "********* test hit ***********"
-#  while not someState.ter:
-    #  someState, reward = e.step(someState, Action.hit)
-    #  print
-    #  print "player value: ", someState.p_value
-    #  print "dealer value: ", someState.d_value
-    #  print "reward      : ", reward
-
-#  print()
-#  for x in range(1, 10):
-    #  someState = State(18, 10)
-    #  print "********* test stick **********"
-    #  someState, reward = e.step(someState, Action.stick)
-    #  print "player value: ", someState.p_value
-    #  print "dealer value: ", someState.d_value
-    #  print "reward      : ", reward
 
