@@ -36,7 +36,6 @@ class MCLearning:
             #  print 'end'
 
         self.updateV()
-        self.plot()
         # test
         #  print self.VList
         #  print self.QList
@@ -59,10 +58,10 @@ class MCLearning:
 
 
     def alpha(self, state, action):
+        return 1. / self.NList[state, action]
         #  print 'N    ', self.NList[state, action]
         #  print 'NList', self.NList
         #  print 'alpha', 1. / self.NList[state, action]
-        return 1. / self.NList[state, action]
 
     def epsilonGreedy(self, s):
         optAction = None
@@ -119,3 +118,4 @@ class MCLearning:
     def checkEpisodes(self, epi):
         for state, action, reward in epi:
             print state, action, reward
+
